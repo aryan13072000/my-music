@@ -36,6 +36,7 @@ const Login: React.FC = () => {
           <TextField
             fullWidth
             label="Email"
+            type="email"
             value={form.email}
             onChange={(e) => setForm({ ...form, email: e.target.value })}
             margin="normal"
