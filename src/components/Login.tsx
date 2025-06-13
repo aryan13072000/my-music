@@ -4,12 +4,38 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 const Login: React.FC = () => {
-  const { login } = useAuth(); 
+  const { login } = useAuth();
   const navigate = useNavigate();
   const [form, setForm] = useState({ email: "", password: "" });
 
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePassword = (password: string) => {
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#^()_+])[A-Za-z\d@$!%*?&#^()_+]{8,}$/;
+    return passwordRegex.test(password);
+  };
+
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
+
+    const isEmailValid = validateEmail(form.email);
+    const isPasswordValid = validatePassword(form.password);
+
+    setEmailError(isEmailValid ? "" : "Invalid email format");
+    setPasswordError(
+      isPasswordValid
+        ? ""
+        : "Min 8 chars, include upper/lowercase, number & special char"
+    );
+
+    if (!isEmailValid || !isPasswordValid) return;
+
     const users = JSON.parse(localStorage.getItem("users") || "[]");
     const matched = users.find(
       (user: any) =>
@@ -40,6 +66,8 @@ const Login: React.FC = () => {
             value={form.email}
             onChange={(e) => setForm({ ...form, email: e.target.value })}
             margin="normal"
+            error={!!emailError}
+            helperText={emailError}
           />
           <TextField
             fullWidth
@@ -48,6 +76,8 @@ const Login: React.FC = () => {
             value={form.password}
             onChange={(e) => setForm({ ...form, password: e.target.value })}
             margin="normal"
+            error={!!passwordError}
+            helperText={passwordError}
           />
           <Button
             variant="contained"
@@ -65,7 +95,7 @@ const Login: React.FC = () => {
             sx={{ mt: 2 }}
             onClick={() => navigate("/register")}
           >
-            Don't have account then Register
+            Don't have an account? Register
           </Button>
         </form>
       </Box>
