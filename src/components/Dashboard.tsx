@@ -13,6 +13,7 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 import { useAuth } from '../context/AuthContext';
 import { searchTracks } from '../spotiy';
+import { useNavigate } from 'react-router-dom';
 
 interface Playlist {
   id: string;
@@ -33,9 +34,13 @@ const Dashboard: React.FC = () => {
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<Track[]>([]);
+  const handleLogout = () => {
+    logout();           // clears auth context or localStorage
+    navigate("/login"); // redirect to login page
+  };
 
   const LOCAL_KEY = `playlists_${user}`;
 
@@ -110,7 +115,7 @@ const Dashboard: React.FC = () => {
       <Box mt={4}>
         <Stack direction="row" justifyContent="space-between" alignItems="center">
           <Typography variant="h4">Welcome, {user}</Typography>
-          <Button variant="outlined" color="secondary" onClick={logout}>
+          <Button variant="outlined" color="secondary" onClick={handleLogout}>
             Logout
           </Button>
         </Stack>

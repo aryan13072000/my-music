@@ -7,9 +7,11 @@ import {
   Box,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const Register: React.FC = () => {
   const navigate = useNavigate();
+   const { login } = useAuth();
   const [form, setForm] = useState({ email: '', password: '' });
 
   const handleRegister = (e: React.FormEvent) => {
@@ -25,7 +27,8 @@ const Register: React.FC = () => {
     users.push(form);
     localStorage.setItem('users', JSON.stringify(users));
     alert('Registration successful!');
-    navigate('/login');
+    login(form.email);
+    navigate("/dashboard");
   };
 
   return (
