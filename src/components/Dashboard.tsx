@@ -30,7 +30,7 @@ interface Track {
 }
 
 const Dashboard: React.FC = () => {
-  const { user, logout } = useAuth();
+  const { user, logout } = useAuth(); 
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');

@@ -50,7 +50,7 @@ const Register: React.FC = () => {
             value={form.password}
             onChange={(e) => setForm({ ...form, password: e.target.value })}
             margin="normal"
-          />
+          /> 
           <Button variant="contained" color="primary" fullWidth type="submit" sx={{ mt: 2 }}>
             Register
           </Button>
