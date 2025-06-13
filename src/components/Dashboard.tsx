@@ -16,6 +16,8 @@ import { v4 as uuidv4 } from "uuid";
 import { useAuth } from "../context/AuthContext";
 import { searchTracks } from "../spotiy";
 import { useNavigate } from "react-router-dom";
+import DeleteIcon from "@mui/icons-material/Delete";
+import PlaylistRemoveIcon from "@mui/icons-material/PlaylistRemove";
 
 interface Playlist {
   id: string;
@@ -200,6 +202,7 @@ const Dashboard: React.FC = () => {
                                 {song.artists.map((a) => a.name).join(", ")}
                               </Typography>
                               <Button
+                                startIcon={<DeleteIcon />}
                                 variant="text"
                                 size="small"
                                 color="error"
@@ -209,9 +212,7 @@ const Dashboard: React.FC = () => {
                                     song.id
                                   )
                                 }
-                              >
-                                Remove
-                              </Button>
+                              />
                             </Box>
                           ))}
                         </Box>
@@ -221,7 +222,7 @@ const Dashboard: React.FC = () => {
                       color="error"
                       onClick={() => handleDeletePlaylist(playlist.id)}
                     >
-                      DELETE
+                      <PlaylistRemoveIcon />
                     </IconButton>
                   </Stack>
                 </CardContent>
